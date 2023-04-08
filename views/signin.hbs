@@ -1,0 +1,31 @@
+<div class="m-4 text-center">
+  <h1 class="h3 font-weight-normal mb-3">Sign In</h1>
+</div>
+<div class="container" style="width: 400px;">
+  <form class="form-signin" action="/signin" method="POST">
+    <div class="form-row mb-3">
+      <label class="form-label" for="email">Email</label>
+      <input class="form-control" id="email" type="text" name="email" class="form-control" placeholder="Email" required
+        autofocus>
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="password">Password</label>
+      <input class="form-control" id="password" type="password" name="password" class="form-control"
+        placeholder="Password" required>
+    </div>
+    <div class="row justify-content-center align-items-center">
+      <button class="btn btn-primary btn-block" style="width: 150px;" type="submit">登入</button>
+    </div>
+  </form>
+  <hr>
+</div>
+<div class="container" style="width: 400px;">
+  <div class="text-center">
+    <a href="http://">Google 登入</a>
+    <a href="http://">Facebook 登入</a>
+    <a href="http://">Line 登入</a>
+  </div>
+</div>
+<div class="m-3 text-center">
+  <a class="btn btn-success btn-block" style="width: 150px;" href="/signup">Sign Up</a>
+</div>
