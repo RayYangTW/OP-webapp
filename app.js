@@ -2,11 +2,12 @@ const express = require('express')
 const { engine } = require('express-handlebars')
 
 const { apis, pages } = require('./routes')
+const handlebarsHelpers = require('./helpers/handlebars-helpers')
 
 const app = express()
 const PORT = 3000
 
-app.engine('.hbs', engine({ extname: '.hbs' }))
+app.engine('.hbs', engine({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', '.hbs')
 app.set('views', './views')
 
