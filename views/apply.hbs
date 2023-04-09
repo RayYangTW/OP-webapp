@@ -1,0 +1,31 @@
+<div class="text-center">
+  <h1 class="h3 font-weight-normal mb-3">申請單</h1>
+</div>
+<div class="container" style="width: 400px;">
+  <form class="form-apply" action="/apply" method="POST">
+    <div class="form-row mb-3">
+      <label class="form-label" for="item">申請項目</label>
+      <input class="form-control" id="item" type="text" name="item" class="form-control" placeholder="item" required
+        autofocus>
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="description">描述</label>
+      <textarea class="form-control" id="description" rows="3" name="description" placeholder="description" required></textarea>
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="image1">相片1</label>
+      <input class="form-control" id="image1" type="file" name="image1" class="form-control-file"
+        placeholder="image1">
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="image2">相片2</label>
+      <input class="form-control" id="image2" type="file" name="image2" class="form-control-file" placeholder="image2">
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="image3">相片3</label>
+      <input class="form-control" id="image3" type="file" name="image3" class="form-control-file" placeholder="image3">
+    </div>
+    <div class="row justify-content-center align-items-center">
+      <button class="btn btn-primary btn-block" style="width: 150px;" type="submit">送出</button>
+    </div>
+  </form>

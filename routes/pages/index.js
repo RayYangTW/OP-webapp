@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../../controllers/pages/user-controller')
+const applyController = require('../../controllers/pages/apply-controller')
 const { body } = require('express-validator')
 
 router.post(
@@ -15,6 +16,8 @@ router.post(
 
 router.get('/signup', userController.signUpPage)
 router.get('/signin', userController.signInPage)
+router.post('/apply', applyController.postApply)
+router.get('/apply', (req, res) => res.render('apply'))
 router.get('/home', (req, res) => res.render('home'))
 
 router.get('/', (req, res) => res.render('home'))
