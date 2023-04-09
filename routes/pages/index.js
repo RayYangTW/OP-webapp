@@ -15,6 +15,7 @@ router.post(
 
 router.get('/signup', userController.signUpPage)
 router.get('/signin', userController.signInPage)
+router.get('/home', (req, res) => res.render('home'))
 
 router.get('/', (req, res) => res.render('home'))
 
