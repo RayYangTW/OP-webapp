@@ -2,23 +2,26 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Status</th>
-      <th scope="col">Item</th>
-      <th scope="col">Description</th>
-      <th scope="col">Apply date</th>
-      <th scope="col">Applier</th>
+      <th scope="col">進度</th>
+      <th scope="col">項目</th>
+      <th scope="col">敘述</th>
+      <th scope="col">申請日期</th>
+      <th scope="col">申請人</th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
     <tr>
       <th scope="col">{{this.id}}</th>
-      <td>{{this.status}}</td>
+      <td>{{this.progress}}</td>
       <td>{{this.item}}</td>
       <td>{{this.description}}</td>
-      <td>{{this.createdAt}}</td>
+      <td>{{this.applyDate}}</td>
       <td>{{this.User.name}}</td>
     </tr>
     {{/each}}
   </tbody>
 </table>
+<div class="row justify-content-center align-items-center">
+  <a href="javascript:history.back()" class="btn btn-dark mt-2" style="width: 150px;">返回上一頁</a>
+</div>

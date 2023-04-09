@@ -1,4 +1,5 @@
 const { Apply, Category, User } = require('../models')
+const { transferDateTime } = require('../helpers/dayjs-helpers')
 
 const applyServices = {
   postApply: (req, cb) => {
@@ -8,7 +9,8 @@ const applyServices = {
       description,
       image1,
       image2,
-      image3
+      image3,
+      status: '未處理'
     })
       .then(createdApply => cb(null, { createdApply }))
       .catch(err => cb(err))
@@ -27,8 +29,11 @@ const applyServices = {
       ]
     })
       .then(applies => {
-        console.log(applies)
-        cb(null, applies)
+        const applyResult = applies.map(a => ({
+          ...a,
+          applyDate: transferDateTime(a.createdAt)
+        }))
+        cb(null, applyResult)
       })
       .catch(err => cb(err))
   }
