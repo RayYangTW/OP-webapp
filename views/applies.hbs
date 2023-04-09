@@ -1,0 +1,24 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Status</th>
+      <th scope="col">Item</th>
+      <th scope="col">Description</th>
+      <th scope="col">Apply date</th>
+      <th scope="col">Applier</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+    <tr>
+      <th scope="col">{{this.id}}</th>
+      <td>{{this.status}}</td>
+      <td>{{this.item}}</td>
+      <td>{{this.description}}</td>
+      <td>{{this.createdAt}}</td>
+      <td>{{this.User.name}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

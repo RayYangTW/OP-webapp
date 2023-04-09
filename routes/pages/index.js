@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
+const { body } = require('express-validator')
+
 const userController = require('../../controllers/pages/user-controller')
 const applyController = require('../../controllers/pages/apply-controller')
-const { body } = require('express-validator')
 
 router.post(
   '/signup',
@@ -13,11 +14,11 @@ router.post(
     .isEmail()
     .withMessage('電子信箱格式不正確'),
   userController.signUp)
-
 router.get('/signup', userController.signUpPage)
 router.get('/signin', userController.signInPage)
 router.post('/apply', applyController.postApply)
-router.get('/apply', (req, res) => res.render('apply'))
+router.get('/apply', applyController.applyPage)
+router.get('/applies', applyController.getApplies)
 router.get('/home', (req, res) => res.render('home'))
 
 router.get('/', (req, res) => res.render('home'))
