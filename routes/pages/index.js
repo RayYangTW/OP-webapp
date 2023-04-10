@@ -15,6 +15,8 @@ router.post('/signup',
   userController.signUp)
 router.get('/signup', userController.signUpPage)
 router.get('/signin', userController.signInPage)
+
+router.get('/apply/:applyId', applyController.getManageApply)
 router.post('/apply',
   body('categoryId')
     .notEmpty()
@@ -24,6 +26,7 @@ router.post('/apply',
     .withMessage('描述字數不可超過100字'),
   applyController.postApply)
 router.get('/apply', applyController.getApplyPage)
+
 router.get('/applies/notStarted', applyController.getNotStartedApplies)
 router.get('/applies/inProgress', applyController.getInProgressApplies)
 router.get('/applies/done', applyController.getDoneApplies)

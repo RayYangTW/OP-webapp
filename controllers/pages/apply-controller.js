@@ -22,6 +22,9 @@ const applyController = {
   },
   getNotStartedApplies: (req, res, next) => {
     applyServices.getNotStartedApplies(req, (err, data) => err ? next(err) : res.status(200).render('applies-not-started', { data }))
+  },
+  getManageApply: (req, res, next) => {
+    applyServices.getManageApply(req, (err, data) => err ? next(err) : res.status(200).render('manage-apply', { data }))
   }
 }
 

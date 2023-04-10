@@ -1,0 +1,55 @@
+<div class="container" style="width: 400px;">
+  <div class="container text-center">
+    <div class="form-row mb-3">
+      <h2>{{data.Category.category}} No.{{data.id}}</h2>
+      <p>{{data.description}}</p>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-center align-items-center">
+  <div class="card m-2" style="width: 18rem;">
+    <img src="{{data.image1}}" class="card-img-top" alt="資料相片1">
+    <div class="card-body">
+      <p class="card-text">照片1</p>
+    </div>
+  </div>
+  <div class="card m-2" style="width: 18rem;">
+    <img src="{{data.image2}}" class="card-img-top" alt="資料相片2">
+    <div class="card-body">
+      <p class="card-text">照片2</p>
+    </div>
+  </div>
+  <div class="card m-2" style="width: 18rem;">
+    <img src="{{data.image3}}" class="card-img-top" alt="資料相片3">
+    <div class="card-body">
+      <p class="card-text">照片3</p>
+    </div>
+  </div>
+</div>
+<div class="container mt-2" style="width: 400px;">
+  <form class="form-apply " action="/apply" method="POST">
+    <div class="row mb-3">
+      <label class="col-sm-4 col-form-label" for="status">狀態更新</label>
+      <div class="col-sm-8">
+        <select class="form-select" id="status" name="status">
+          <option value="notStarted">未處理</option>
+          <option value="inProgress">處理中</option>
+          <option value="done">已完成</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <label class="col-sm-4 col-form-label" for="progress">進度描述</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" id="progress" rows="1" name="progress" placeholder="100字內" maxlength="200">{{data.progress}}</textarea>
+      </div>
+    </div>
+    <div class="row justify-content-center align-items-center">
+      <button class="btn btn-primary btn-block" style="width: 150px;" type="submit">送出</button>
+    </div>
+    <div class="row justify-content-center align-items-center">
+      <a href="javascript:history.back()" class="btn btn-dark mt-2" style="width: 150px;">返回上一頁</a>
+    </div>
+  </form>
+</div>
