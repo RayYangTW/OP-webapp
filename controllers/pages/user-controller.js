@@ -12,7 +12,15 @@ const userController = {
       return res.redirect('/signin')
     })
   },
-  signInPage: (req, res) => { res.render('signin') }
+  signInPage: (req, res) => { res.render('signin') },
+  signIn: (req, res) => { res.redirect('/home') },
+  logout: (req, res, next) => {
+    req.logout(err => {
+      if (err) return next(err)
+      console.log('success_msg', '你已經成功登出。')
+      res.redirect('/signin')
+    })
+  }
 }
 
 module.exports = userController

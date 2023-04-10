@@ -2,9 +2,17 @@ const express = require('express')
 const router = express.Router()
 const { body } = require('express-validator')
 
+const passport = require('../../config/passport')
 const userController = require('../../controllers/pages/user-controller')
 const applyController = require('../../controllers/pages/apply-controller')
 
+const { authenticator } = require('../../middleware/auth')
+
+router.post('/signin', passport.authenticate('local', {
+  failureRedirect: '/signin',
+  failureFlash: true
+}), userController.signIn)
+router.get('/signin', userController.signInPage)
 router.post('/signup',
   body('password')
     .isLength({ min: 8 })
@@ -14,7 +22,7 @@ router.post('/signup',
     .withMessage('電子信箱格式不正確'),
   userController.signUp)
 router.get('/signup', userController.signUpPage)
-router.get('/signin', userController.signInPage)
+router.post('/logout', userController.logout)
 
 router.put('/apply/:applyId', applyController.manageApply)
 router.get('/apply/:applyId', applyController.getManageApply)
@@ -30,14 +38,13 @@ router.post('/apply',
     .notEmpty()
     .withMessage('描述不可為空白'),
   applyController.postApply)
-router.get('/apply', applyController.getApplyPage)
+router.get('/apply', authenticator, applyController.getApplyPage)
 
-router.get('/applies/notStarted', applyController.getNotStartedApplies)
-router.get('/applies/inProgress', applyController.getInProgressApplies)
-router.get('/applies/done', applyController.getDoneApplies)
-router.get('/applies', applyController.getApplies)
-router.get('/home', (req, res) => res.render('home'))
-
-router.get('/', (req, res) => res.render('home'))
+router.get('/applies/notStarted', authenticator, applyController.getNotStartedApplies)
+router.get('/applies/inProgress', authenticator, applyController.getInProgressApplies)
+router.get('/applies/done', authenticator, applyController.getDoneApplies)
+router.get('/applies', authenticator, applyController.getApplies)
+router.get('/home', authenticator, (req, res) => res.render('home'))
+router.get('/', authenticator, (req, res) => res.render('home'))
 
 module.exports = router

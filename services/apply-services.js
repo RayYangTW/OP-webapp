@@ -16,7 +16,6 @@ const applyServices = {
   },
   postApply: (req, cb) => {
     const { categoryId, description, image1, image2, image3 } = req.body
-    console.log(categoryId)
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       return cb(null, { errorMessages: errors.array(), categoryId, description, image1, image2, image3 })
