@@ -15,12 +15,14 @@ const applyServices = {
       .catch(err => cb(err))
   },
   postApply: (req, cb) => {
-    const { category, description, image1, image2, image3 } = req.body
+    const { categoryId, description, image1, image2, image3 } = req.body
+    console.log(categoryId)
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return cb(null, { errorMessages: errors.array(), category, description, image1, image2, image3 })
+      return cb(null, { errorMessages: errors.array(), categoryId, description, image1, image2, image3 })
     }
     Apply.create({
+      categoryId,
       description,
       image1,
       image2,

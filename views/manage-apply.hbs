@@ -7,24 +7,30 @@
   </div>
 </div>
 <div class="row justify-content-center align-items-center">
+  {{#if data.image1}}
   <div class="card m-2" style="width: 18rem;">
     <img src="{{data.image1}}" class="card-img-top" alt="資料相片1">
     <div class="card-body">
       <p class="card-text">照片1</p>
     </div>
   </div>
+  {{/if}}
+  {{#if data.image2}}
   <div class="card m-2" style="width: 18rem;">
     <img src="{{data.image2}}" class="card-img-top" alt="資料相片2">
     <div class="card-body">
       <p class="card-text">照片2</p>
     </div>
   </div>
+  {{/if}}
+  {{#if data.image3}}
   <div class="card m-2" style="width: 18rem;">
     <img src="{{data.image3}}" class="card-img-top" alt="資料相片3">
     <div class="card-body">
       <p class="card-text">照片3</p>
     </div>
   </div>
+  {{/if}}
 </div>
 <div class="container mt-2" style="width: 400px;">
   <form class="form-apply " action="/apply/{{data.id}}?_method=PUT" method="POST">

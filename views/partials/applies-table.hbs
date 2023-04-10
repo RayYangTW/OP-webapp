@@ -3,7 +3,7 @@
     <table class="table table-hover" id="applicationTable">
       <thead>
         <tr>
-          <th scope="col" class="text-nowrap">編輯</th>
+          <th scope="col" class="text-nowrap">更新</th>
           <th scope="col" class="text-nowrap">編號</th>
           <th scope="col" class="text-nowrap">狀態</th>
           <th scope="col" class="text-nowrap">進度</th>
@@ -16,7 +16,7 @@
       <tbody>
         {{#each data}}
         <tr>
-          <td><a href="/apply/{{this.id}}" class="btn btn-primary">編輯</a></td>
+          <td><a href="/apply/{{this.id}}" class="btn btn-primary">更新</a></td>
           <th scope="col">{{this.id}}</th>
           <td>{{this.status}}</td>
           <td>{{this.progress}}</td>

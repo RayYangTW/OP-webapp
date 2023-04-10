@@ -24,7 +24,11 @@ router.post('/apply',
     .withMessage('必須選擇一個項目'),
   body('description')
     .isLength({ max: 200 })
-    .withMessage('描述字數不可超過100字'),
+    .withMessage('描述字數不可超過100字')
+    .trim()
+    .escape()
+    .notEmpty()
+    .withMessage('描述不可為空白'),
   applyController.postApply)
 router.get('/apply', applyController.getApplyPage)
 
