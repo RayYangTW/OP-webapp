@@ -16,6 +16,7 @@ const applyServices = {
   },
   postApply: (req, cb) => {
     const { categoryId, description, image1, image2, image3 } = req.body
+    const userId = req.user.id
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       return cb(null, { errorMessages: errors.array(), categoryId, description, image1, image2, image3 })
@@ -26,7 +27,8 @@ const applyServices = {
       image1,
       image2,
       image3,
-      status: 'notStarted'
+      status: 'notStarted',
+      userId
     })
       .then(createdApply => cb(null, { createdApply }))
       .catch(err => cb(err))
@@ -104,6 +106,30 @@ const applyServices = {
       where: { status: 'notStarted' },
       nest: true,
       raw: true,
+      attributes: [
+        'id', 'description', 'status', 'progress', 'createdAt'
+      ],
+      order: [['createdAt', 'DESC']],
+      include: [
+        { model: Category, attributes: ['id', 'category'] },
+        { model: User, attributes: ['id', 'name', 'email'] }
+      ]
+    })
+      .then(applies => {
+        const applyResult = applies.map(a => ({
+          ...a,
+          applyDate: transferDateTime(a.createdAt)
+        }))
+        cb(null, applyResult)
+      })
+      .catch(err => cb(err))
+  },
+  getMyApplies: (req, cb) => {
+    const userId = req.user.id
+    return Apply.findAll({
+      nest: true,
+      raw: true,
+      where: { userId },
       attributes: [
         'id', 'description', 'status', 'progress', 'createdAt'
       ],

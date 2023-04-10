@@ -7,6 +7,10 @@ module.exports = {
       'SELECT id FROM Categories;',
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
+    const users = await queryInterface.sequelize.query(
+      'SELECT id FROM Users;',
+      { type: queryInterface.sequelize.QueryTypes.SELECT }
+    )
     const statusOptions = ['done', 'inProgress', 'notStarted']
     await queryInterface.bulkInsert('Applies',
       Array.from({ length: 30 }, () => ({
@@ -17,6 +21,7 @@ module.exports = {
         status: statusOptions[Math.floor(Math.random() * statusOptions.length)],
         progress: faker.lorem.word(),
         category_id: categories[Math.floor(Math.random() * categories.length)].id,
+        user_id: users[Math.floor(Math.random() * users.length)].id,
         created_at: faker.date.recent(30),
         updated_at: new Date()
       }))

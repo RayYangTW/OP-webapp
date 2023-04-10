@@ -40,6 +40,7 @@ router.post('/apply',
   applyController.postApply)
 router.get('/apply', authenticator, applyController.getApplyPage)
 
+router.get('/applies/:userId', authenticator, applyController.getMyApplies)
 router.get('/applies/notStarted', authenticator, applyController.getNotStartedApplies)
 router.get('/applies/inProgress', authenticator, applyController.getInProgressApplies)
 router.get('/applies/done', authenticator, applyController.getDoneApplies)

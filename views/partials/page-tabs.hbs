@@ -13,7 +13,7 @@
       <a class="nav-link {{#ifCond route 'notStarted'}}active{{/ifCond}}" href="/applies/notStarted">未處理</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {{#ifCond route 'myApplication'}}active{{/ifCond}}" href="/applies/{{this.User.id}}">我的申請單</a>
+      <a class="nav-link {{#ifCond route 'myApplication'}}active{{/ifCond}}" href="/applies/{{user.id}}">我的申請單</a>
     </li>
   </ul>
 </div>
