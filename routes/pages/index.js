@@ -16,6 +16,7 @@ router.post('/signup',
 router.get('/signup', userController.signUpPage)
 router.get('/signin', userController.signInPage)
 
+router.put('/apply/:applyId', applyController.manageApply)
 router.get('/apply/:applyId', applyController.getManageApply)
 router.post('/apply',
   body('categoryId')

@@ -1,5 +1,6 @@
 const express = require('express')
 const { engine } = require('express-handlebars')
+const methodOverride = require('method-override')
 
 const { apis, pages } = require('./routes')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
@@ -13,6 +14,7 @@ app.set('views', './views')
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(methodOverride('_method'))
 
 app.use('/apis', apis)
 app.use(pages)

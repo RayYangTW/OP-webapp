@@ -25,6 +25,9 @@ const applyController = {
   },
   getManageApply: (req, res, next) => {
     applyServices.getManageApply(req, (err, data) => err ? next(err) : res.status(200).render('manage-apply', { data }))
+  },
+  manageApply: (req, res, next) => {
+    applyServices.manageApply(req, (err, data) => err ? next(err) : res.status(200).redirect('/applies'))
   }
 }
 

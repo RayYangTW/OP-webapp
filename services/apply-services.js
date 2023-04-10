@@ -58,9 +58,9 @@ const applyServices = {
       nest: true,
       raw: true,
       attributes: [
-        'id', 'description', 'status', 'progress', 'createdAt'
+        'id', 'description', 'status', 'progress', 'createdAt', 'updatedAt'
       ],
-      order: [['createdAt', 'DESC']],
+      order: [['updatedAt', 'DESC']],
       include: [
         { model: Category, attributes: ['id', 'category'] },
         { model: User, attributes: ['id', 'name', 'email'] }
@@ -136,6 +136,29 @@ const applyServices = {
       ]
     })
       .then(applyData => cb(null, applyData))
+      .catch(err => cb(err))
+  },
+  manageApply: (req, cb) => {
+    const { applyId } = req.params
+    const { status, progress } = req.body
+    return Apply.findOne({
+      where: { id: applyId },
+      attributes: [
+        'id', 'description', 'status', 'progress', 'createdAt', 'image1', 'image2', 'image3'
+      ],
+      include: [
+        { model: Category, attributes: ['id', 'category'] },
+        { model: User, attributes: ['id', 'name', 'email'] }
+      ]
+    })
+      .then(applyData => {
+        const updateData = {
+          status,
+          progress
+        }
+        return applyData.update(updateData)
+      })
+      .then(managedData => cb(null, managedData))
       .catch(err => cb(err))
   }
 }

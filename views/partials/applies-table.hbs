@@ -3,25 +3,27 @@
     <table class="table table-hover" id="applicationTable">
       <thead>
         <tr>
+          <th scope="col" class="text-nowrap">編輯</th>
           <th scope="col" class="text-nowrap">編號</th>
+          <th scope="col" class="text-nowrap">狀態</th>
           <th scope="col" class="text-nowrap">進度</th>
           <th scope="col" class="text-nowrap">項目</th>
           <th scope="col" class="text-nowrap">敘述</th>
-          <th scope="col" class="text-nowrap">申請日期</th>
           <th scope="col" class="text-nowrap">申請人</th>
-          <th scope="col" class="text-nowrap">編輯</th>
+          <th scope="col" class="text-nowrap">申請日期</th>
         </tr>
       </thead>
       <tbody>
         {{#each data}}
         <tr>
+          <td><a href="/apply/{{this.id}}" class="btn btn-primary">編輯</a></td>
           <th scope="col">{{this.id}}</th>
+          <td>{{this.status}}</td>
           <td>{{this.progress}}</td>
           <td>{{this.Category.category}}</td>
           <td>{{this.description}}</td>
-          <td>{{this.applyDate}}</td>
           <td>{{this.User.name}}</td>
-          <td><a href="/apply/{{this.id}}" class="btn btn-primary">編輯</a></td>
+          <td>{{this.applyDate}}</td>
         </tr>
         {{/each}}
       </tbody>
