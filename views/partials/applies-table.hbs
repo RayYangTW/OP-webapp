@@ -1,29 +1,33 @@
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">編號</th>
-      <th scope="col">進度</th>
-      <th scope="col">項目</th>
-      <th scope="col">敘述</th>
-      <th scope="col">申請日期</th>
-      <th scope="col">申請人</th>
-      <th scope="col">編輯</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each data}}
-    <tr>
-      <th scope="col">{{this.id}}</th>
-      <td>{{this.progress}}</td>
-      <td>{{this.item}}</td>
-      <td>{{this.description}}</td>
-      <td>{{this.applyDate}}</td>
-      <td>{{this.User.name}}</td>
-      <td><a href="/apply/{{this.id}}" class="btn btn-primary">編輯</a></td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
-<div class="row justify-content-center align-items-center">
+<div class="overflow-auto p-3 mx-auto" style="max-height: 450px;">
+  <div class="table-responsive">
+    <table class="table table-hover" id="applicationTable">
+      <thead>
+        <tr>
+          <th scope="col" class="text-nowrap">編號</th>
+          <th scope="col" class="text-nowrap">進度</th>
+          <th scope="col" class="text-nowrap">項目</th>
+          <th scope="col" class="text-nowrap">敘述</th>
+          <th scope="col" class="text-nowrap">申請日期</th>
+          <th scope="col" class="text-nowrap">申請人</th>
+          <th scope="col" class="text-nowrap">編輯</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data}}
+        <tr>
+          <th scope="col">{{this.id}}</th>
+          <td>{{this.progress}}</td>
+          <td>{{this.Category.category}}</td>
+          <td>{{this.description}}</td>
+          <td>{{this.applyDate}}</td>
+          <td>{{this.User.name}}</td>
+          <td><a href="/apply/{{this.id}}" class="btn btn-primary">編輯</a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="mt-3 row justify-content-center align-items-center">
   <a href="/home" class="btn btn-dark mt-2" style="width: 150px;">返回上一頁</a>
 </div>

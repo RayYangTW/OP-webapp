@@ -1,11 +1,26 @@
+const { validationResult } = require('express-validator')
 const { Apply, Category, User } = require('../models')
 const { transferDateTime } = require('../helpers/dayjs-helpers')
 
 const applyServices = {
+  getApplyPage: (req, cb) => {
+    return Category.findAll({
+      nest: true,
+      raw: true,
+      attributes: [
+        'id', 'category'
+      ]
+    })
+      .then(categories => cb(null, categories))
+      .catch(err => cb(err))
+  },
   postApply: (req, cb) => {
-    const { item, description, image1, image2, image3 } = req.body
+    const { category, description, image1, image2, image3 } = req.body
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return cb(null, { errorMessages: errors.array(), category, description, image1, image2, image3 })
+    }
     Apply.create({
-      item,
       description,
       image1,
       image2,
@@ -20,7 +35,7 @@ const applyServices = {
       nest: true,
       raw: true,
       attributes: [
-        'id', 'item', 'description', 'status', 'progress', 'createdAt'
+        'id', 'description', 'status', 'progress', 'createdAt'
       ],
       order: [['createdAt', 'DESC']],
       include: [
@@ -43,7 +58,7 @@ const applyServices = {
       nest: true,
       raw: true,
       attributes: [
-        'id', 'item', 'description', 'status', 'progress', 'createdAt'
+        'id', 'description', 'status', 'progress', 'createdAt'
       ],
       order: [['createdAt', 'DESC']],
       include: [
@@ -66,7 +81,7 @@ const applyServices = {
       nest: true,
       raw: true,
       attributes: [
-        'id', 'item', 'description', 'status', 'progress', 'createdAt'
+        'id', 'description', 'status', 'progress', 'createdAt'
       ],
       order: [['createdAt', 'DESC']],
       include: [
@@ -89,7 +104,7 @@ const applyServices = {
       nest: true,
       raw: true,
       attributes: [
-        'id', 'item', 'description', 'status', 'progress', 'createdAt'
+        'id', 'description', 'status', 'progress', 'createdAt'
       ],
       order: [['createdAt', 'DESC']],
       include: [

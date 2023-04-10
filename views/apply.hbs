@@ -4,13 +4,16 @@
 <div class="container" style="width: 400px;">
   <form class="form-apply" action="/apply" method="POST">
     <div class="form-row mb-3">
-      <label class="form-label" for="item">申請項目</label>
-      <input class="form-control" id="item" type="text" name="item" class="form-control" placeholder="item" required
-        autofocus>
+      <label class="form-label" for="categoryId">選擇申請項目</label>
+      <select class="form-select" id="categoryId" name="categoryId">
+        {{#each data}}
+        <option value="{{this.id}}">{{this.category}}</option>
+        {{/each}}
+      </select>
     </div>
     <div class="form-row mb-3">
       <label class="form-label" for="description">描述</label>
-      <textarea class="form-control" id="description" rows="3" name="description" placeholder="description" required></textarea>
+      <textarea class="form-control" id="description" rows="3" name="description" placeholder="100字內" maxlength="200" required>{{data.description}}</textarea>
     </div>
     <div class="form-row mb-3">
       <label class="form-label" for="image1">相片1</label>
@@ -29,6 +32,6 @@
       <button class="btn btn-primary btn-block" style="width: 150px;" type="submit">送出</button>
     </div>
     <div class="row justify-content-center align-items-center">
-      <a href="javascript:history.back()" class="btn btn-dark mt-2" style="width: 150px;">返回上一頁</a>
+      <a href="/home" class="btn btn-dark mt-2" style="width: 150px;">返回上一頁</a>
     </div>
   </form>
