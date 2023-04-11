@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 
-const { User } = require('../models')
+const { User, Role } = require('../models')
 const { validationResult } = require('express-validator')
 
 const userService = {
@@ -9,24 +9,27 @@ const userService = {
     if (!errors.isEmpty()) {
       return cb(null, { errorMessages: errors.array() })
     }
-    const reqEmail = req.body.email
-    if (req.body.password !== req.body.passwordCheck) throw new Error('Passwords do not match!')
-    User.findOne({ where: { email: reqEmail } })
-      .then(user => {
+    const { name, email, password, passwordCheck } = req.body
+    if (password !== passwordCheck) throw new Error('Passwords do not match!')
+    return Promise.all([
+      Role.findOne({
+        raw: true,
+        where: { name: 'user' }
+      }),
+      User.findOne({ where: { email } })
+    ])
+      .then(([userRole, user]) => {
         if (user) throw new Error('Email already exists!')
-        return bcrypt.hash(req.body.password, 10)
+        return User.create({
+          name,
+          email,
+          password: bcrypt.hashSync(password, 10),
+          roleId: userRole.id
+        })
       })
-      .then(hash => User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: hash,
-        role: 'user',
-        categoryId: null
-      }))
       .then(signedUser => cb(null, { user: signedUser }))
       .catch(err => cb(err))
   }
-
 }
 
 module.exports = userService
