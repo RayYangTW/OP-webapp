@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator')
 const { Apply, Category, User } = require('../models')
 const { transferDateTime } = require('../helpers/dayjs-helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const applyServices = {
   getApplyPage: (req, cb) => {
@@ -15,21 +16,32 @@ const applyServices = {
       .catch(err => cb(err))
   },
   postApply: (req, cb) => {
-    const { categoryId, description, image1, image2, image3 } = req.body
+    const { categoryId, description } = req.body
+    const { image1, image2, image3 } = req.files
+    const imageFile1 = image1 ? image1[0] : null
+    const imageFile2 = image2 ? image2[0] : null
+    const imageFile3 = image3 ? image3[0] : null
     const userId = req.user.id
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return cb(null, { errorMessages: errors.array(), categoryId, description, image1, image2, image3 })
+      return cb(null, { errorMessages: errors.array(), categoryId, description })
     }
-    Apply.create({
-      categoryId,
-      description,
-      image1,
-      image2,
-      image3,
-      status: 'notStarted',
-      userId
-    })
+    return Promise.all([
+      imgurFileHandler(imageFile1),
+      imgurFileHandler(imageFile2),
+      imgurFileHandler(imageFile3)
+    ])
+      .then(([image1, image2, image3]) => {
+        return Apply.create({
+          categoryId,
+          description,
+          image1,
+          image2,
+          image3,
+          status: 'notStarted',
+          userId
+        })
+      })
       .then(createdApply => cb(null, { createdApply }))
       .catch(err => cb(err))
   },

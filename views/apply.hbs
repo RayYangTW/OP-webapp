@@ -2,7 +2,7 @@
   <h1 class="h3 font-weight-normal mb-3">申請單</h1>
 </div>
 <div class="container" style="width: 400px;">
-  <form class="form-apply" action="/apply" method="POST">
+  <form class="form-apply" action="/apply" method="POST" enctype="multipart/form-data">
     <div class="form-row mb-3">
       <label class="form-label" for="categoryId">選擇申請項目</label>
       <select class="form-select" id="categoryId" name="categoryId">
@@ -17,16 +17,15 @@
     </div>
     <div class="form-row mb-3">
       <label class="form-label" for="image1">相片1</label>
-      <input class="form-control" id="image1" type="file" name="image1" class="form-control-file"
-        placeholder="image1">
+      <input class="form-control" id="image1" type="file" name="image1" class="form-control-file" placeholder="image1" accept="image/jpeg, image/png, image/gif">
     </div>
     <div class="form-row mb-3">
       <label class="form-label" for="image2">相片2</label>
-      <input class="form-control" id="image2" type="file" name="image2" class="form-control-file" placeholder="image2">
+      <input class="form-control" id="image2" type="file" name="image2" class="form-control-file" placeholder="image2" accept="image/jpeg, image/png, image/gif">
     </div>
     <div class="form-row mb-3">
       <label class="form-label" for="image3">相片3</label>
-      <input class="form-control" id="image3" type="file" name="image3" class="form-control-file" placeholder="image3">
+      <input class="form-control" id="image3" type="file" name="image3" class="form-control-file" placeholder="image3" accept="image/jpeg, image/png, image/gif">
     </div>
     <div class="row justify-content-center align-items-center">
       <button class="btn btn-primary btn-block" style="width: 150px;" type="submit">送出</button>

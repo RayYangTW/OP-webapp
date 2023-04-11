@@ -5,6 +5,7 @@ const { body } = require('express-validator')
 const passport = require('../../config/passport')
 const userController = require('../../controllers/pages/user-controller')
 const applyController = require('../../controllers/pages/apply-controller')
+const upload = require('../../middleware/multer')
 
 const { authenticator } = require('../../middleware/auth')
 
@@ -27,6 +28,7 @@ router.post('/logout', userController.logout)
 router.put('/apply/:applyId', applyController.manageApply)
 router.get('/apply/:applyId', applyController.getManageApply)
 router.post('/apply',
+  upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }]),
   body('categoryId')
     .notEmpty()
     .withMessage('必須選擇一個項目'),
