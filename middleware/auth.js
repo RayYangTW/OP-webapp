@@ -4,6 +4,12 @@ const authenticator = (req, res, next) => {
   res.redirect('/signin')
 }
 
+const roleIsManager = (req, res, next) => {
+  if (req.user.role === 'manager') return next()
+  req.flash('warning_msg', '權限錯誤')
+  return res.redirect('back')
+}
+
 module.exports = {
   authenticator
 }

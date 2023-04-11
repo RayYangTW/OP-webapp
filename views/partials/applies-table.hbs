@@ -16,7 +16,14 @@
       <tbody>
         {{#each data}}
         <tr>
-          <td><a href="/apply/{{this.id}}" class="btn btn-primary">更新</a></td>
+          <td>
+            {{#ifNot ../user.role 'user'}}
+            <a href="/manage/apply/{{this.id}}" class="btn btn-primary">更新</a>
+            {{/ifNot}}
+            {{#ifCond ../user.role 'user'}}
+            <a href="/apply/{{this.id}}" class="btn btn-primary">查看</a>
+            {{/ifCond}}
+          </td>
           <th scope="col">{{this.id}}</th>
           <td>{{this.status}}</td>
           <td>{{this.progress}}</td>

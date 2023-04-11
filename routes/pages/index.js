@@ -25,8 +25,8 @@ router.post('/signup',
 router.get('/signup', userController.signUpPage)
 router.post('/logout', userController.logout)
 
-router.put('/apply/:applyId', applyController.manageApply)
-router.get('/apply/:applyId', applyController.getManageApply)
+router.put('/manage/apply/:applyId', applyController.manageApply)
+router.get('/manage/apply/:applyId', applyController.getManageApply)
 router.post('/apply',
   upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }]),
   body('categoryId')
