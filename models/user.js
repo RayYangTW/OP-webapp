@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.Apply, { foreignKey: 'userId' })
       User.belongsTo(models.Category, { foreignKey: 'categoryId' })
+      User.belongsTo(models.Role, { foreignKey: 'roleId' })
     }
   }
   User.init({

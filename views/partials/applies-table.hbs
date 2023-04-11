@@ -17,10 +17,10 @@
         {{#each data}}
         <tr>
           <td>
-            {{#ifNot ../user.role 'user'}}
+            {{#ifNot ../user.Role.level 1}}
             <a href="/manage/apply/{{this.id}}" class="btn btn-primary">更新</a>
             {{/ifNot}}
-            {{#ifCond ../user.role 'user'}}
+            {{#ifCond ../user.Role.level 1}}
             <a href="/apply/{{this.id}}" class="btn btn-primary">查看</a>
             {{/ifCond}}
           </td>
