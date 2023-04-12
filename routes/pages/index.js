@@ -2,12 +2,13 @@ const express = require('express')
 const router = express.Router()
 const { body } = require('express-validator')
 const user = require('./modules/users')
+const admin = require('./modules/admin')
 const passport = require('../../config/passport')
 const userController = require('../../controllers/pages/user-controller')
 const applyController = require('../../controllers/pages/apply-controller')
 const upload = require('../../middleware/multer')
 
-const { authenticator } = require('../../middleware/auth')
+const { authenticator, roleIsAdmin } = require('../../middleware/auth')
 const { generalErrorHandler } = require('../../middleware/error-handler')
 
 router.post('/signin', passport.authenticate('local', {
@@ -57,6 +58,7 @@ router.get('/applies/:userId', authenticator, applyController.getMyApplies)
 router.get('/applies', authenticator, applyController.getApplies)
 router.get('/home', authenticator, (req, res) => res.render('home'))
 router.get('/', authenticator, (req, res) => res.render('home'))
+router.use('/admin', authenticator, roleIsAdmin, admin)
 router.use('/users', authenticator, user)
 router.use('/', generalErrorHandler)
 

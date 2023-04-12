@@ -5,12 +5,19 @@ const authenticator = (req, res, next) => {
 }
 
 const roleIsManager = (req, res, next) => {
-  if (req.user.role === 'manager') return next()
+  if (req.user.Role.name === 'manager') return next()
+  req.flash('warning_messages', '權限錯誤')
+  return res.redirect('back')
+}
+
+const roleIsAdmin = (req, res, next) => {
+  if (req.user.Role.name === 'admin') return next()
   req.flash('warning_messages', '權限錯誤')
   return res.redirect('back')
 }
 
 module.exports = {
   authenticator,
-  roleIsManager
+  roleIsManager,
+  roleIsAdmin
 }
