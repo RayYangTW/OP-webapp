@@ -8,6 +8,7 @@ const applyController = require('../../controllers/pages/apply-controller')
 const upload = require('../../middleware/multer')
 
 const { authenticator } = require('../../middleware/auth')
+const { generalErrorHandler } = require('../../middleware/error-handler')
 
 router.post('/signin', passport.authenticate('local', {
   failureRedirect: '/signin',
@@ -49,5 +50,6 @@ router.get('/applies/:userId', authenticator, applyController.getMyApplies)
 router.get('/applies', authenticator, applyController.getApplies)
 router.get('/home', authenticator, (req, res) => res.render('home'))
 router.get('/', authenticator, (req, res) => res.render('home'))
+router.use('/', generalErrorHandler)
 
 module.exports = router

@@ -7,21 +7,21 @@
 </div>
 {{/each}} --}}
 
-{{#each error_messages}}
+{{#if error_messages}}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-  {{ this.msg }}
+  {{ error_messages }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-{{/each}}
+{{/if}}
 {{#if success_messages}}
 <div class="alert alert-success alert-dismissible fade show col-md-4" role="alert">
   {{ success_messages }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {{/if}}
-{{#if warning_msg}}
+{{#if warning_messages}}
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  {{ warning_msg }}
+  {{ warning_messages }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {{/if}}
