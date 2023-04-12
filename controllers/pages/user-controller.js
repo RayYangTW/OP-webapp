@@ -10,6 +10,7 @@ const userController = {
         req.flash('error_messages', `${data.errorMessages[0].msg}`)
         return res.render('signup', { error_messages: req.flash('error_messages'), name, email })
       }
+      req.flash('success_messages', '申請帳號成功，請登入')
       return res.redirect('/signin')
     })
   },
@@ -20,6 +21,16 @@ const userController = {
       if (err) return next(err)
       req.flash('success_messages', '你已經成功登出。')
       res.redirect('/signin')
+    })
+  },
+  getUser: (req, res, next) => {
+    userService.getUser(req, (err, data) => err ? next(err) : res.status(200).render('user-profile', { data }))
+  },
+  editUser: (req, res, next) => {
+    userService.editUser(req, (err, data) => {
+      if (err) return next(err)
+      req.flash('success_messages', '設定帳號成功，請重新登入')
+      return res.status(200).redirect('/signin')
     })
   }
 }

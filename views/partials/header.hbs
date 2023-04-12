@@ -9,17 +9,17 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-          {{#ifCond user.role 'admin'}}
-          <li class="nav-item">
-            <a href="/admin" class="nav-link">Admin 後台</a>
-          </li>
-          {{/ifCond}}
           <li class="nav-item d-inline-flex align-items-center">
             <span class="text-white nav-link">Hi, {{ user.email }}</span>
           </li>
           <li class="nav-item">
-            <a href="/users/{{ user.id }}" class="nav-link">Profile</a>
+            <a href="/users/{{ user.id }}/profile" class="nav-link">帳號設定</a>
           </li>
+          {{#ifCond user.Role.level 900}}
+          <li class="nav-item">
+            <a href="/admin" class="nav-link">管理員後台</a>
+          </li>
+          {{/ifCond}}
           <li class="nav-item">
             <form action="/logout" method="POST">
               <button type="submit" class="btn btn-outline-light">登出</button>

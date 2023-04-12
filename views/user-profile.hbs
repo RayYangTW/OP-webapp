@@ -1,0 +1,30 @@
+<div class="text-center">
+  <h1 class="h3 font-weight-normal mb-3">編輯個人資訊</h1>
+</div>
+<div class="container" style="width: 400px;">
+  <form class="form-edit" action="/users/{{data.id}}/profile?_method=PUT" method="POST">
+    <div class="form-row mb-3">
+      <label class="form-label" for="name">使用者名稱</label>
+      <input class="form-control" id="name" type="text" name="name" placeholder="Name" value="{{data.name}}"
+        autofocus>
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="email">電子信箱</label>
+      <input class="form-control" id="email" type="text" name="email" placeholder="Email" value="{{data.email}}">
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="password">密碼</label>
+      <input class="form-control" id="password" type="password" name="password" placeholder="Password" required>
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="passwordCheck">確認密碼</label>
+      <input class="form-control" id="passwordCheck" type="password" name="passwordCheck" placeholder="Password Check" required>
+    </div>
+    <div class="row justify-content-center align-items-center">
+      <button class="btn btn-primary btn-block" style="width: 150px;" type="submit">送出</button>
+    </div>
+  </form>
+</div>
+<div class="row justify-content-center align-items-center">
+  <a href="/home" class="btn btn-dark mt-2" style="width: 150px;">返回上一頁</a>
+</div>
