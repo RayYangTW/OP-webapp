@@ -8,7 +8,7 @@ const applyController = {
     applyServices.postApply(req, (err, data) => {
       if (err) return next(err)
       if (data.errorMessages) return res.status(401).render('apply', { error_messages: data.errorMessages, data })
-      return res.status(200).render('home', { success_messages: '申請單成功送出', data })
+      return res.status(200).render('home', { success_messages: '申請單成功建立，已通知負責人。', data })
     })
   },
   getApplies: (req, res, next) => {
@@ -32,6 +32,9 @@ const applyController = {
   getMyApplies: (req, res, next) => {
     applyServices.getMyApplies(req, (err, data) => err ? next(err) : res.status(200).render('applies-belong-me', { data }))
   }
+  // test: (req, res, next) => {
+  //   applyServices.test(req, (err, data) => err ? next(err) : res.status(200).render('home', { success_messages: '已寄信通知負責人', data }))
+  // },
 }
 
 module.exports = applyController

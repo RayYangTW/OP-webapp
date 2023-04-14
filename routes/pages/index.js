@@ -49,6 +49,10 @@ router.post('/apply',
     .notEmpty()
     .withMessage('描述不可為空白'),
   applyController.postApply)
+// ----
+// router.post('/applytest', authenticator, applyController.sendApplication)
+// router.post('/test', applyController.test)
+// ----
 router.get('/apply', authenticator, applyController.getApplyPage)
 
 router.get('/applies/notStarted', authenticator, applyController.getNotStartedApplies)

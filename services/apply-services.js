@@ -1,7 +1,8 @@
 const { validationResult } = require('express-validator')
-const { Apply, Category, User } = require('../models')
+const { Apply, Category, User, Role } = require('../models')
 const { transferDateTime } = require('../helpers/dayjs-helpers')
 const { imgurFileHandler } = require('../helpers/file-helpers')
+const { sendApplyEmail } = require('../helpers/send-email-helper')
 
 const applyServices = {
   getApplyPage: (req, cb) => {
@@ -42,7 +43,29 @@ const applyServices = {
           userId
         })
       })
-      .then(createdApply => cb(null, { createdApply }))
+      .then(createdApply => {
+        createdApply = createdApply.toJSON()
+        return Apply.findOne({
+          raw: true,
+          nest: true,
+          where: { id: createdApply.id },
+          include: [
+            {
+              model: Category,
+              attributes: ['category'],
+              include: [{
+                model: User,
+                attributes: ['id', 'name', 'email']
+              }]
+            }
+          ]
+        })
+          .then(result => {
+            cb(null, result)
+            sendApplyEmail(req, result)
+          })
+          .catch(err => cb(err))
+      })
       .catch(err => cb(err))
   },
   getApplies: (req, cb) => {
@@ -199,6 +222,17 @@ const applyServices = {
       })
       .then(managedData => cb(null, managedData))
       .catch(err => cb(err))
+  },
+  test: (req, cb) => {
+    return Category.findAll({
+      where: { id: 1 },
+      raw: true,
+      nest: true,
+      include: [
+        { model: User, include: [{ model: Role }] }
+      ]
+    })
+      .then(data => console.log(data))
   }
 }
 
