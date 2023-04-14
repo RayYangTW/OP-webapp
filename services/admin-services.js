@@ -40,12 +40,34 @@ const adminService = {
   updateUser: (req, cb) => {
     const userId = req.params.userId
     const { categoryId, roleId } = req.body
-    return User.findByPk(userId, {
-      attributes: [
-        'id', 'name', 'email', 'categoryId', 'roleId'
-      ]
-    })
-      .then(user => {
+    return Promise.all([
+      User.findOne({
+        raw: true,
+        nest: true,
+        where: { categoryId },
+        attributes: [
+          'id', 'name', 'email', 'categoryId', 'roleId'
+        ]
+      }),
+      User.findByPk(userId, {
+        attributes: [
+          'id', 'name', 'email', 'categoryId', 'roleId'
+        ]
+      }),
+      Category.findAll({
+        raw: true,
+        nest: true
+      }),
+      Role.findOne({
+        where: { name: 'user' },
+        raw: true,
+        nest: true
+      })
+    ])
+      .then(([existManager, user, categories, roleUser]) => {
+        const checkUser = user.toJSON()
+        if (existManager.id !== checkUser.id) throw new Error('項目已有負責人')
+        if (Number(categoryId) !== '' && Number(roleId) === roleUser.id) throw new Error('負責項目的角色權限不可為user')
         return user.update({
           categoryId: categoryId === '' ? null : categoryId,
           roleId
