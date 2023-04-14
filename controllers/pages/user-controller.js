@@ -28,9 +28,15 @@ const userController = {
   },
   editUser: (req, res, next) => {
     userService.editUser(req, (err, data) => {
-      if (err) return next(err)
-      req.flash('success_messages', '設定帳號成功，請重新登入')
-      return res.status(200).redirect('/signin')
+      if (err) {
+        req.flash('error_messages', '設定帳號失敗')
+        return next(err)
+      }
+      req.logout(err => {
+        if (err) return next(err)
+        req.flash('success_messages', '設定帳號成功，請重新登入')
+        return res.status(200).redirect('/signin')
+      })
     })
   }
 }
