@@ -1,6 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const FacebookStrategy = require('passport-facebook').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 const bcrypt = require('bcryptjs')
 // const assert = require('assert')
 const { User, Role } = require('../models')
@@ -36,7 +37,41 @@ passport.use(
     profileFields: ['email', 'displayName']
   },
   async (accessToken, refreshToken, profile, cb) => {
-    console.log(profile)
+    console.log(`FB:${profile}`)
+    const { name, email } = profile._json
+    return Promise.all([
+      User.findOne({ where: { email } }),
+      Role.findOne({
+        raw: true,
+        where: { name: 'user' }
+      })
+    ])
+      .then(([user, userRole]) => {
+        if (user) return cb(null, user)
+        const randomPassword = Math.random().toString(36).slice(-8)
+        return User.create({
+          name,
+          email,
+          password: bcrypt.hashSync(randomPassword, 10),
+          roleId: userRole.id
+        })
+          .then(user => cb(null, user))
+          .catch(err => cb(err, false))
+      })
+  }
+  )
+)
+
+// Google
+passport.use(
+  new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK,
+    profileFields: ['email', 'displayName']
+  },
+  async (accessToken, refreshToken, profile, cb) => {
+    console.log(`Google:${profile}`)
     const { name, email } = profile._json
     return Promise.all([
       User.findOne({ where: { email } }),
