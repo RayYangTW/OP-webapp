@@ -44,5 +44,6 @@ router.use('/auth', auth)
 router.use('/admin', authenticator, roleIsAdmin, admin)
 router.use('/users', authenticator, user)
 router.use('/', generalErrorHandler)
+router.get('*', (req, res) => res.status(404).render('error-page'))
 
 module.exports = router
