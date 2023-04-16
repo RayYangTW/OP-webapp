@@ -2,7 +2,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const FacebookStrategy = require('passport-facebook').Strategy
 const GoogleStrategy = require('passport-google-oauth20').Strategy
-const LineStrategy = require('passport-line').Strategy
+// const LineStrategy = require('passport-line').Strategy
 const bcrypt = require('bcryptjs')
 // const assert = require('assert')
 const { User, Role } = require('../models')
@@ -96,38 +96,38 @@ passport.use(
 )
 
 // Line
-passport.use(
-  new LineStrategy({
-    channelID: process.env.LINE_CLIENT_ID,
-    channelSecret: process.env.LINE_SECRET,
-    callbackURL: process.env.LINE_CALLBACK,
-    profileFields: ['email', 'displayName']
-  },
-  async (accessToken, refreshToken, profile, cb) => {
-    const { userId, displayName } = profile._json
-    const email = `${userId}@line.com`
-    return Promise.all([
-      User.findOne({ where: { email } }),
-      Role.findOne({
-        raw: true,
-        where: { name: 'user' }
-      })
-    ])
-      .then(([user, userRole]) => {
-        if (user) return cb(null, user)
-        const randomPassword = Math.random().toString(36).slice(-8)
-        return User.create({
-          name: displayName,
-          email,
-          password: bcrypt.hashSync(randomPassword, 10),
-          roleId: userRole.id
-        })
-          .then(user => cb(null, user))
-          .catch(err => cb(err, false))
-      })
-  }
-  )
-)
+// passport.use(
+//   new LineStrategy({
+//     channelID: process.env.LINE_CLIENT_ID,
+//     channelSecret: process.env.LINE_SECRET,
+//     callbackURL: process.env.LINE_CALLBACK,
+//     profileFields: ['email', 'displayName']
+//   },
+//   async (accessToken, refreshToken, profile, cb) => {
+//     const { userId, displayName } = profile._json
+//     const email = `${userId}@line.com`
+//     return Promise.all([
+//       User.findOne({ where: { email } }),
+//       Role.findOne({
+//         raw: true,
+//         where: { name: 'user' }
+//       })
+//     ])
+//       .then(([user, userRole]) => {
+//         if (user) return cb(null, user)
+//         const randomPassword = Math.random().toString(36).slice(-8)
+//         return User.create({
+//           name: displayName,
+//           email,
+//           password: bcrypt.hashSync(randomPassword, 10),
+//           roleId: userRole.id
+//         })
+//           .then(user => cb(null, user))
+//           .catch(err => cb(err, false))
+//       })
+//   }
+//   )
+// )
 
 passport.serializeUser((user, cb) => {
   cb(null, user.id)

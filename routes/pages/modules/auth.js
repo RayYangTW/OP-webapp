@@ -29,14 +29,14 @@ router.get('/google/callback',
   })
 
 // Line
-router.get('/line',
-  passport.authenticate('line'))
+// router.get('/line',
+//   passport.authenticate('line'))
 
-router.get('/line/callback',
-  passport.authenticate('line', { failureRedirect: '/signin' }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/')
-  })
+// router.get('/line/callback',
+//   passport.authenticate('line', { failureRedirect: '/signin' }),
+//   function (req, res) {
+//     // Successful authentication, redirect home.
+//     res.redirect('/')
+//   })
 
 module.exports = router
