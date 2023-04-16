@@ -5,6 +5,7 @@ const { imgurFileHandler } = require('../helpers/file-helpers')
 const { sendApplyEmail } = require('../helpers/send-email-helper')
 
 const applyServices = {
+  // pages only 到申請單頁面並載入項目清單
   getApplyPage: (req, cb) => {
     return Category.findAll({
       nest: true,
@@ -16,6 +17,7 @@ const applyServices = {
       .then(categories => cb(null, categories))
       .catch(err => cb(err))
   },
+  // 送出申請，利用imgurFileHandler來上傳照片，注意Status的值
   postApply: (req, cb) => {
     const { categoryId, description } = req.body
     const { image1, image2, image3 } = req.files
@@ -68,6 +70,7 @@ const applyServices = {
       })
       .catch(err => cb(err))
   },
+  // 取得所有申請單資料
   getApplies: (req, cb) => {
     return Apply.findAll({
       nest: true,
@@ -90,6 +93,7 @@ const applyServices = {
       })
       .catch(err => cb(err))
   },
+  // 取得所有已完成的申請單資料
   getDoneApplies: (req, cb) => {
     return Apply.findAll({
       where: { status: 'done' },
@@ -113,6 +117,7 @@ const applyServices = {
       })
       .catch(err => cb(err))
   },
+  // 取得所有正在處理中的申請單資料
   getInProgressApplies: (req, cb) => {
     return Apply.findAll({
       where: { status: 'inProgress' },
@@ -136,6 +141,7 @@ const applyServices = {
       })
       .catch(err => cb(err))
   },
+  // 取得所有尚未處理的申請單資料
   getNotStartedApplies: (req, cb) => {
     return Apply.findAll({
       where: { status: 'notStarted' },
@@ -159,6 +165,7 @@ const applyServices = {
       })
       .catch(err => cb(err))
   },
+  // 利用登入id取得所有「我的申請單」的資料
   getMyApplies: (req, cb) => {
     const userId = req.user.id
     return Apply.findAll({
@@ -183,6 +190,7 @@ const applyServices = {
       })
       .catch(err => cb(err))
   },
+  // 取得申請單管理頁面與其資料
   getManageApply: (req, cb) => {
     const { applyId } = req.params
     return Apply.findOne({
@@ -200,6 +208,7 @@ const applyServices = {
       .then(applyData => cb(null, applyData))
       .catch(err => cb(err))
   },
+  // 送出管理申請單資料
   manageApply: (req, cb) => {
     const { applyId } = req.params
     const { status, progress } = req.body
@@ -223,6 +232,7 @@ const applyServices = {
       .then(managedData => cb(null, managedData))
       .catch(err => cb(err))
   },
+  // User查看申請單
   userCheckApply: (req, cb) => {
     const { applyId } = req.params
     return Apply.findOne({

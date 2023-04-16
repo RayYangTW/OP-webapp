@@ -4,6 +4,7 @@ const { User, Role, Category } = require('../models')
 const { validationResult } = require('express-validator')
 
 const userService = {
+  // 註冊功能
   signUp: (req, cb) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -30,6 +31,7 @@ const userService = {
       .then(signedUser => cb(null, { user: signedUser }))
       .catch(err => cb(err))
   },
+  // 取得特定User帳戶資料
   getUser: (req, cb) => {
     const userId = req.user.id
     const currentUserId = Number(req.params.userId)
@@ -48,6 +50,7 @@ const userService = {
       .then(user => cb(null, user))
       .catch(err => cb(err))
   },
+  // 編輯帳戶資料
   editUser: (req, cb) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {

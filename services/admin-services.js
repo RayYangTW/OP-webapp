@@ -1,8 +1,7 @@
-// const { Op } = require('sequelize')
 const { User, Role, Category } = require('../models')
-// const { validationResult } = require('express-validator')
 
 const adminService = {
+  // 取得所有User資料，及其相關Role與Category
   getUsers: (req, cb) => {
     return User.findAll({
       raw: true,
@@ -21,6 +20,7 @@ const adminService = {
       .then(users => cb(null, users))
       .catch(err => cb(err))
   },
+  // 取得特定User
   getUser: (req, cb) => {
     const userId = req.params.userId
     return Promise.all([
@@ -37,6 +37,7 @@ const adminService = {
       .then(([role, category, user]) => cb(null, { role, category, user }))
       .catch(err => cb(err))
   },
+  // admin 更新User的資料（角色權限與負責項目）
   updateUser: (req, cb) => {
     const userId = req.params.userId
     const { categoryId, roleId } = req.body
