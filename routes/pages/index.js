@@ -3,16 +3,15 @@ const router = express.Router()
 const user = require('./modules/users')
 const admin = require('./modules/admin')
 const auth = require('./modules/auth')
+const apply = require('./modules/apply')
 const applies = require('./modules/applies')
 const manage = require('./modules/manage')
 const passport = require('../../config/passport')
 const userController = require('../../controllers/pages/user-controller')
-const applyController = require('../../controllers/pages/apply-controller')
-const upload = require('../../middleware/multer')
 
 const { authenticator, roleIsAdmin, roleIsManager } = require('../../middleware/auth')
 const { generalErrorHandler } = require('../../middleware/error-handler')
-const { signUpValidator, applyValidator } = require('../../middleware/express-validators')
+const { signUpValidator } = require('../../middleware/express-validators')
 
 router.post('/signin', passport.authenticate('local', {
   failureRedirect: '/signin',
@@ -22,21 +21,11 @@ router.get('/signin', userController.signInPage)
 router.post('/signup', signUpValidator, userController.signUp)
 router.get('/signup', userController.signUpPage)
 router.post('/logout', userController.logout)
-
-router.get('/apply/:applyId', authenticator, applyController.userCheckApply)
-router.post('/apply',
-  upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }]),
-  applyValidator,
-  applyController.postApply)
-// ----
-// router.post('/applytest', authenticator, applyController.sendApplication)
-// router.post('/test', applyController.test)
-// ----
-router.get('/apply', authenticator, applyController.getApplyPage)
-
 router.get('/home', authenticator, (req, res) => res.render('home'))
 router.get('/', authenticator, (req, res) => res.render('home'))
+
 router.use('/auth', auth)
+router.use('/apply', authenticator, apply)
 router.use('/manage', authenticator, roleIsManager, manage)
 router.use('/applies', authenticator, applies)
 router.use('/admin', authenticator, roleIsAdmin, admin)

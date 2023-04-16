@@ -35,9 +35,6 @@ const applyController = {
   userCheckApply: (req, res, next) => {
     applyServices.userCheckApply(req, (err, data) => err ? next(err) : res.status(200).render('check-apply', { data }))
   }
-  // test: (req, res, next) => {
-  //   applyServices.test(req, (err, data) => err ? next(err) : res.status(200).render('home', { success_messages: '已寄信通知負責人', data }))
-  // },
 }
 
 module.exports = applyController
