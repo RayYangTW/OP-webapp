@@ -31,6 +31,9 @@ const applyController = {
   },
   getMyApplies: (req, res, next) => {
     applyServices.getMyApplies(req, (err, data) => err ? next(err) : res.status(200).render('applies-belong-me', { data }))
+  },
+  userCheckApply: (req, res, next) => {
+    applyServices.userCheckApply(req, (err, data) => err ? next(err) : res.status(200).render('check-apply', { data }))
   }
   // test: (req, res, next) => {
   //   applyServices.test(req, (err, data) => err ? next(err) : res.status(200).render('home', { success_messages: '已寄信通知負責人', data }))

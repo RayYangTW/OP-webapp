@@ -223,6 +223,23 @@ const applyServices = {
       .then(managedData => cb(null, managedData))
       .catch(err => cb(err))
   },
+  userCheckApply: (req, cb) => {
+    const { applyId } = req.params
+    return Apply.findOne({
+      nest: true,
+      raw: true,
+      where: { id: applyId },
+      attributes: [
+        'id', 'description', 'status', 'progress', 'createdAt', 'image1', 'image2', 'image3'
+      ],
+      include: [
+        { model: Category, attributes: ['id', 'category'] },
+        { model: User, attributes: ['id', 'name', 'email'] }
+      ]
+    })
+      .then(applyData => cb(null, applyData))
+      .catch(err => cb(err))
+  },
   test: (req, cb) => {
     return Category.findAll({
       where: { id: 1 },

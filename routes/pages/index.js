@@ -3,6 +3,7 @@ const router = express.Router()
 const user = require('./modules/users')
 const admin = require('./modules/admin')
 const auth = require('./modules/auth')
+const applies = require('./modules/applies')
 const passport = require('../../config/passport')
 const userController = require('../../controllers/pages/user-controller')
 const applyController = require('../../controllers/pages/apply-controller')
@@ -23,6 +24,7 @@ router.post('/logout', userController.logout)
 
 router.put('/manage/apply/:applyId', applyController.manageApply)
 router.get('/manage/apply/:applyId', applyController.getManageApply)
+router.get('/apply/:applyId', authenticator, applyController.userCheckApply)
 router.post('/apply',
   upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }]),
   applyValidator,
@@ -33,14 +35,10 @@ router.post('/apply',
 // ----
 router.get('/apply', authenticator, applyController.getApplyPage)
 
-router.get('/applies/notStarted', authenticator, applyController.getNotStartedApplies)
-router.get('/applies/inProgress', authenticator, applyController.getInProgressApplies)
-router.get('/applies/done', authenticator, applyController.getDoneApplies)
-router.get('/applies/:userId', authenticator, applyController.getMyApplies)
-router.get('/applies', authenticator, applyController.getApplies)
 router.get('/home', authenticator, (req, res) => res.render('home'))
 router.get('/', authenticator, (req, res) => res.render('home'))
 router.use('/auth', auth)
+router.use('/applies', authenticator, applies)
 router.use('/admin', authenticator, roleIsAdmin, admin)
 router.use('/users', authenticator, user)
 router.use('/', generalErrorHandler)
