@@ -5,7 +5,7 @@ const authenticator = (req, res, next) => {
 }
 
 const roleIsManager = (req, res, next) => {
-  if (req.user.Role.name === 'manager') return next()
+  if (req.user.Role.name !== 'user') return next()
   req.flash('warning_messages', '權限錯誤')
   return res.redirect('back')
 }
